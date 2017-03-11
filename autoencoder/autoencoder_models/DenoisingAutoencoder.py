@@ -1,6 +1,6 @@
 import tensorflow as tf
 import numpy as np
-from . import autoencoder.Utils
+from .autoencoder import Utils
 
 
 class AdditiveGaussianNoiseAutoencoder(object):

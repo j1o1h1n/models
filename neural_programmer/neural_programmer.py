@@ -183,7 +183,7 @@ def master(train_data, dev_data, utility):
         file_list = sorted(list(selected_models.items()), key=lambda x: x[0])
         if (len(file_list) > 0):
           file_list = file_list[0:len(file_list) - 1]
-	print("list of models: ", file_list)
+          print("list of models: ", file_list)
         for model_file in file_list:
           model_file = model_file[1]
           print("restoring: ", model_file)
