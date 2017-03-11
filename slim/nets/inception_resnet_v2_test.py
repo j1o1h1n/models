@@ -13,9 +13,9 @@
 # limitations under the License.
 # ==============================================================================
 """Tests for slim.inception_resnet_v2."""
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+
+
+
 
 import tensorflow as tf
 
@@ -97,7 +97,7 @@ class InceptionTest(tf.test.TestCase):
       images = tf.random_uniform((batch_size, height, width, 3))
       sess.run(tf.global_variables_initializer())
       output = sess.run(logits, {inputs: images.eval()})
-      self.assertEquals(output.shape, (batch_size, num_classes))
+      self.assertEqual(output.shape, (batch_size, num_classes))
 
   def testEvaluation(self):
     batch_size = 2
@@ -111,7 +111,7 @@ class InceptionTest(tf.test.TestCase):
       predictions = tf.argmax(logits, 1)
       sess.run(tf.global_variables_initializer())
       output = sess.run(predictions)
-      self.assertEquals(output.shape, (batch_size,))
+      self.assertEqual(output.shape, (batch_size,))
 
   def testTrainEvalWithReuse(self):
     train_batch_size = 5
@@ -129,7 +129,7 @@ class InceptionTest(tf.test.TestCase):
       predictions = tf.argmax(logits, 1)
       sess.run(tf.global_variables_initializer())
       output = sess.run(predictions)
-      self.assertEquals(output.shape, (eval_batch_size,))
+      self.assertEqual(output.shape, (eval_batch_size,))
 
 
 if __name__ == '__main__':

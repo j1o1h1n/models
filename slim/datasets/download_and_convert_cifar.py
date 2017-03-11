@@ -22,9 +22,9 @@ buffers, each of which contain a single image and label.
 The script should take several minutes to run.
 
 """
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+
+
+
 
 from six.moves import cPickle
 import os

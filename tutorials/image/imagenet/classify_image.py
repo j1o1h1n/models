@@ -31,9 +31,9 @@ to use this script to perform image recognition.
 https://tensorflow.org/tutorials/image_recognition/
 """
 
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+
+
+
 
 import argparse
 import os.path
@@ -103,7 +103,7 @@ class NodeLookup(object):
 
     # Loads the final mapping of integer node ID to human-readable string
     node_id_to_name = {}
-    for key, val in node_id_to_uid.items():
+    for key, val in list(node_id_to_uid.items()):
       if val not in uid_to_human:
         tf.logging.fatal('Failed to locate: %s', val)
       name = uid_to_human[val]

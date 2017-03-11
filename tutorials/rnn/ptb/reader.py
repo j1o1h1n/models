@@ -15,9 +15,9 @@
 
 
 """Utilities for parsing PTB text files."""
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+
+
+
 
 import collections
 import os
@@ -34,10 +34,10 @@ def _build_vocab(filename):
   data = _read_words(filename)
 
   counter = collections.Counter(data)
-  count_pairs = sorted(counter.items(), key=lambda x: (-x[1], x[0]))
+  count_pairs = sorted(list(counter.items()), key=lambda x: (-x[1], x[0]))
 
   words, _ = list(zip(*count_pairs))
-  word_to_id = dict(zip(words, range(len(words))))
+  word_to_id = dict(list(zip(words, list(range(len(words))))))
 
   return word_to_id
 

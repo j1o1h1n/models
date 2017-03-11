@@ -14,9 +14,9 @@
 # ==============================================================================
 """A library to train Inception using multiple GPU's with synchronous updates.
 """
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+
+
+
 
 import copy
 from datetime import datetime

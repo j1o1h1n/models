@@ -83,7 +83,7 @@ def compute_q_noisy_max(counts, noise_eps):
   winner = np.argmax(counts)
   counts_normalized = noise_eps * (counts - counts[winner])
   counts_rest = np.array(
-      [counts_normalized[i] for i in xrange(len(counts)) if i != winner])
+      [counts_normalized[i] for i in range(len(counts)) if i != winner])
   q = 0.0
   for c in counts_rest:
     gap = -c
@@ -110,7 +110,7 @@ def compute_q_noisy_max_approx(counts, noise_eps):
   winner = np.argmax(counts)
   counts_normalized = noise_eps * (counts - counts[winner])
   counts_rest = np.array(
-      [counts_normalized[i] for i in xrange(len(counts)) if i != winner])
+      [counts_normalized[i] for i in range(len(counts)) if i != winner])
   gap = -max(counts_rest)
   q = (len(counts) - 1) * (gap + 2.0) / (4.0 * math.exp(gap))
   return min(q, 1.0 - (1.0/len(counts)))
@@ -139,7 +139,7 @@ def logmgf_exact(q, priv_eps, l):
     try:
       log_t = math.log(t)
     except ValueError:
-      print "Got ValueError in math.log for values :" + str((q, priv_eps, l, t))
+      print("Got ValueError in math.log for values :" + str((q, priv_eps, l, t)))
       log_t = priv_eps * l
   else:
     log_t = priv_eps * l
@@ -171,7 +171,7 @@ def sens_at_k(counts, noise_eps, l, k):
   """
   counts_sorted = sorted(counts, reverse=True)
   if 0.5 * noise_eps * l > 1:
-    print "l too large to compute sensitivity"
+    print("l too large to compute sensitivity")
     return 0
   # Now we can assume that at k, gap remains positive
   # or we have reached the point where logmgf_exact is
@@ -244,12 +244,12 @@ def main(unused_argv):
   num_examples = min(n, FLAGS.max_examples)
 
   if not FLAGS.indices_file:
-    indices = np.array(range(num_examples))
+    indices = np.array(list(range(num_examples)))
   else:
     index_list = np.load(FLAGS.indices_file)
     indices = index_list[:num_examples]
 
-  l_list = 1.0 + np.array(xrange(FLAGS.moments))
+  l_list = 1.0 + np.array(range(FLAGS.moments))
   beta = FLAGS.beta
   total_log_mgf_nm = np.array([0.0 for _ in l_list])
   total_ss_nm = np.array([0.0 for _ in l_list])
@@ -268,8 +268,8 @@ def main(unused_argv):
   # Solving gives eps = (alpha - ln (delta))/l
   eps_list_nm = (total_log_mgf_nm - math.log(delta)) / l_list
 
-  print "Epsilons (Noisy Max): " + str(eps_list_nm)
-  print "Smoothed sensitivities (Noisy Max): " + str(total_ss_nm / l_list)
+  print("Epsilons (Noisy Max): " + str(eps_list_nm))
+  print("Smoothed sensitivities (Noisy Max): " + str(total_ss_nm / l_list))
 
   # If beta < eps / 2 ln (1/delta), then adding noise Lap(1) * 2 SS/eps
   # is eps,delta DP
@@ -280,12 +280,12 @@ def main(unused_argv):
   # Print the first one's scale
   ss_eps = 2.0 * beta * math.log(1/delta)
   ss_scale = 2.0 / ss_eps
-  print "To get an " + str(ss_eps) + "-DP estimate of epsilon, "
-  print "..add noise ~ " + str(ss_scale)
-  print "... times " + str(total_ss_nm / l_list)
-  print "Epsilon = " + str(min(eps_list_nm)) + "."
+  print("To get an " + str(ss_eps) + "-DP estimate of epsilon, ")
+  print("..add noise ~ " + str(ss_scale))
+  print("... times " + str(total_ss_nm / l_list))
+  print("Epsilon = " + str(min(eps_list_nm)) + ".")
   if min(eps_list_nm) == eps_list_nm[-1]:
-    print "Warning: May not have used enough values of l"
+    print("Warning: May not have used enough values of l")
 
   # Data indpendent bound, as mechanism is
   # 2*noise_eps DP.
@@ -294,7 +294,7 @@ def main(unused_argv):
       [logmgf_exact(1.0, 2.0 * noise_eps, l) for l in l_list])
 
   data_ind_eps_list = (data_ind_log_mgf - math.log(delta)) / l_list
-  print "Data independent bound = " + str(min(data_ind_eps_list)) + "."
+  print("Data independent bound = " + str(min(data_ind_eps_list)) + ".")
 
   return
 

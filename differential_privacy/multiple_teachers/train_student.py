@@ -14,9 +14,9 @@
 # ==============================================================================
 
 
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+
+
+
 
 import numpy as np
 import tensorflow as tf
@@ -70,7 +70,7 @@ def ensemble_preds(dataset, nb_teachers, stdnt_data):
   result = np.zeros(result_shape, dtype=np.float32)
 
   # Get predictions from each teacher
-  for teacher_id in xrange(nb_teachers):
+  for teacher_id in range(nb_teachers):
     # Compute path of checkpoint file for teacher model with ID teacher_id
     if FLAGS.deeper:
       ckpt_path = FLAGS.teachers_dir + '/' + str(dataset) + '_' + str(nb_teachers) + '_teachers_' + str(teacher_id) + '_deep.ckpt-' + str(FLAGS.teachers_max_steps - 1) #NOLINT(long-line)

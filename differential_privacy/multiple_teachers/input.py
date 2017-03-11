@@ -13,11 +13,11 @@
 # limitations under the License.
 # ==============================================================================
 
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
 
-import cPickle
+
+
+
+import pickle
 import gzip
 import math
 import numpy as np
@@ -102,14 +102,14 @@ def image_whitening(data):
   mean = np.mean(data, axis=(1,2,3))
 
   ones = np.ones(np.shape(data)[1:4], dtype=np.float32)
-  for i in xrange(len(data)):
+  for i in range(len(data)):
     data[i, :, :, :] -= mean[i] * ones
 
   # Compute adjusted standard variance
   adj_std_var = np.maximum(np.ones(len(data), dtype=np.float32) / math.sqrt(nb_pixels), np.std(data, axis=(1,2,3))) #NOLINT(long-line)
 
   # Divide image
-  for i in xrange(len(data)):
+  for i in range(len(data)):
     data[i, :, :, :] = data[i, :, :, :] / adj_std_var[i]
 
   print(np.shape(data))
@@ -154,7 +154,7 @@ def unpickle_cifar_dic(file):
   :return: tuple of (images, labels)
   """
   fo = open(file, 'rb')
-  dict = cPickle.load(fo)
+  dict = pickle.load(fo)
   fo.close()
   return dict['data'], dict['labels']
 
@@ -196,7 +196,7 @@ def extract_cifar10(local_url, data_dir):
   else:
     # Do everything from scratch
     # Define lists of all files we should extract
-    train_files = ["data_batch_" + str(i) for i in xrange(1,6)]
+    train_files = ["data_batch_" + str(i) for i in range(1,6)]
     test_file = ["test_batch"]
     cifar10_files = train_files + test_file
 

@@ -13,9 +13,9 @@
 # limitations under the License.
 # ==============================================================================
 """Contains utilities for downloading and converting datasets."""
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+
+
+
 
 import os
 import sys
@@ -76,7 +76,7 @@ def download_and_uncompress_tarball(tarball_url, dataset_dir):
   filename = tarball_url.split('/')[-1]
   filepath = os.path.join(dataset_dir, filename)
   exists = os.path.isfile(filepath)
-  if exists and input("Existing file found, skip download? ") == "y":
+  if exists and eval(input("Existing file found, skip download? ")) == "y":
     return
 
   def _progress(count, block_size, total_size):
@@ -133,7 +133,7 @@ def read_label_file(dataset_dir, filename=LABELS_FILENAME):
   with tf.gfile.Open(labels_filename, 'r') as f:
     lines = f.read().decode()
   lines = lines.split('\n')
-  lines = filter(None, lines)
+  lines = [_f for _f in lines if _f]
 
   labels_to_class_names = {}
   for line in lines:

@@ -204,7 +204,7 @@ class Model(object):
     params = tf.trainable_variables()
     gradients = tf.gradients(loss, params)
     clipped_gradients, _ = tf.clip_by_global_norm(gradients, 5.0)
-    return opt.apply_gradients(zip(clipped_gradients, params),
+    return opt.apply_gradients(list(zip(clipped_gradients, params)),
                                global_step=self.global_step)
 
   def get_optimizer(self):

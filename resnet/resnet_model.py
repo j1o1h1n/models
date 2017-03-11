@@ -139,7 +139,7 @@ class ResNet(object):
       optimizer = tf.train.MomentumOptimizer(self.lrn_rate, 0.9)
 
     apply_op = optimizer.apply_gradients(
-        zip(grads, trainable_variables),
+        list(zip(grads, trainable_variables)),
         global_step=self.global_step, name='train_step')
 
     train_ops = [apply_op] + self._extra_train_ops

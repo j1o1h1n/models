@@ -44,9 +44,9 @@ Sample usage:
   imagenet_2012_validation_synset_labels.txt
 """
 
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+
+
+
 
 import os
 import os.path

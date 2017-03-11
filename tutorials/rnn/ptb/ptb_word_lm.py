@@ -52,9 +52,9 @@ To run:
 $ python ptb_word_lm.py --data_path=simple-examples/data/
 
 """
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+
+
+
 
 import time
 
@@ -167,7 +167,7 @@ class PTBModel(object):
                                       config.max_grad_norm)
     optimizer = tf.train.GradientDescentOptimizer(self._lr)
     self._train_op = optimizer.apply_gradients(
-        zip(grads, tvars),
+        list(zip(grads, tvars)),
         global_step=tf.contrib.framework.get_or_create_global_step())
 
     self._new_lr = tf.placeholder(

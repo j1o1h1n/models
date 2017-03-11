@@ -545,7 +545,7 @@ class Graph():
     self.batch_log_prob = tf.zeros([self.batch_size], dtype=self.data_type)
     #Perform max_passes and at each  pass select operation and column
     for curr_pass in range(max_passes):
-      print "step: ", curr_pass
+      print("step: ", curr_pass)
       output, select, softmax, soft_softmax, column_softmax, soft_column_softmax = self.one_pass(
           select, question_embedding, hidden_vectors, hprev, prev_select_1,
           curr_pass)
@@ -634,18 +634,18 @@ class Graph():
     batch_size = self.batch_size
     learning_rate = tf.cast(self.utility.FLAGS.learning_rate, self.data_type)
     self.total_cost = self.compute_error() 
-    optimize_params = self.params.values()
-    optimize_names = self.params.keys()
-    print "optimize params ", optimize_names
+    optimize_params = list(self.params.values())
+    optimize_names = list(self.params.keys())
+    print("optimize params ", optimize_names)
     if (self.utility.FLAGS.l2_regularizer > 0.0):
       reg_cost = 0.0
-      for ind_param in self.params.keys():
+      for ind_param in list(self.params.keys()):
         reg_cost += tf.nn.l2_loss(self.params[ind_param])
       self.total_cost += self.utility.FLAGS.l2_regularizer * reg_cost
     grads = tf.gradients(self.total_cost, optimize_params, name="gradients")
     grad_norm = 0.0
     for p, name in zip(grads, optimize_names):
-      print "grads: ", p, name
+      print("grads: ", p, name)
       if isinstance(p, tf.IndexedSlices):
         grad_norm += tf.reduce_sum(p.values * p.values)
       elif not (p == None):
@@ -666,13 +666,13 @@ class Graph():
         clipped_grads.append(p)
     grads = clipped_grads
     self.global_step = global_step
-    params_list = self.params.values()
+    params_list = list(self.params.values())
     params_list.append(self.global_step)
     adam = tf.train.AdamOptimizer(
         learning_rate,
         epsilon=tf.cast(self.utility.FLAGS.eps, self.data_type),
         use_locking=True)
-    self.step = adam.apply_gradients(zip(grads, optimize_params), 
+    self.step = adam.apply_gradients(list(zip(grads, optimize_params)), 
 					global_step=self.global_step)
     self.init_op = tf.global_variables_initializer()
 

@@ -19,9 +19,9 @@ This should achieve a test error of 0.7%. Please keep this model as simple and
 linear as possible, it is meant as a tutorial for simple convolutional models.
 Run with --self_test on the command line to execute a short self-test.
 """
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+
+
+
 
 import argparse
 import gzip
@@ -103,7 +103,7 @@ def fake_data(num_images):
       shape=(num_images, IMAGE_SIZE, IMAGE_SIZE, NUM_CHANNELS),
       dtype=numpy.float32)
   labels = numpy.zeros(shape=(num_images,), dtype=numpy.int64)
-  for image in xrange(num_images):
+  for image in range(num_images):
     label = image % 2
     data[image, :, :, 0] = label - 0.5
     labels[image] = label
@@ -266,7 +266,7 @@ def main(_):
     if size < EVAL_BATCH_SIZE:
       raise ValueError("batch size for evals larger than dataset: %d" % size)
     predictions = numpy.ndarray(shape=(size, NUM_LABELS), dtype=numpy.float32)
-    for begin in xrange(0, size, EVAL_BATCH_SIZE):
+    for begin in range(0, size, EVAL_BATCH_SIZE):
       end = begin + EVAL_BATCH_SIZE
       if end <= size:
         predictions[begin:end, :] = sess.run(
@@ -286,7 +286,7 @@ def main(_):
     tf.global_variables_initializer().run()
     print('Initialized!')
     # Loop through training steps.
-    for step in xrange(int(num_epochs * train_size) // BATCH_SIZE):
+    for step in range(int(num_epochs * train_size) // BATCH_SIZE):
       # Compute the offset of the current minibatch in the data.
       # Note that we could use better randomization across epochs.
       offset = (step * BATCH_SIZE) % (train_size - BATCH_SIZE)

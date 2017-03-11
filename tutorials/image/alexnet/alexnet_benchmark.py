@@ -29,9 +29,9 @@ Forward-backward pass:
 Run on Tesla K40c: 480 +/- 48 ms / batch
 Run on Titan X:    244 +/- 30 ms / batch
 """
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+
+
+
 
 import argparse
 from datetime import datetime
@@ -168,7 +168,7 @@ def time_tensorflow_run(session, target, info_string):
   num_steps_burn_in = 10
   total_duration = 0.0
   total_duration_squared = 0.0
-  for i in xrange(FLAGS.num_batches + num_steps_burn_in):
+  for i in range(FLAGS.num_batches + num_steps_burn_in):
     start_time = time.time()
     _ = session.run(target)
     duration = time.time() - start_time

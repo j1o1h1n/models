@@ -22,7 +22,7 @@ way. It uses privacy amplication via sampling to compute the privacy
 spending for each batch and strong composition (specialized for Gaussian
 noise) for accumulate the privacy spending.
 """
-from __future__ import division
+
 
 import abc
 import collections
@@ -120,7 +120,7 @@ class AmortizedAccountant(object):
     return [EpsDelta(math.sqrt(eps_squared_sum), float(delta_sum))]
 
 
-class MomentsAccountant(object):
+class MomentsAccountant(object, metaclass=abc.ABCMeta):
   """Privacy accountant which keeps track of moments of privacy loss.
 
   Note: The constructor of this class creates tf.Variables that must
@@ -170,8 +170,6 @@ class MomentsAccountant(object):
 
   """
 
-  __metaclass__ = abc.ABCMeta
-
   def __init__(self, total_examples, moment_orders=32):
     """Initialize a MomentsAccountant.
 
@@ -184,7 +182,7 @@ class MomentsAccountant(object):
     self._total_examples = total_examples
     self._moment_orders = (moment_orders
                            if isinstance(moment_orders, (list, tuple))
-                           else range(1, moment_orders + 1))
+                           else list(range(1, moment_orders + 1)))
     self._max_moment_order = max(self._moment_orders)
     assert self._max_moment_order < 100, "The moment order is too large."
     self._log_moments = [tf.Variable(numpy.float64(0.0),
@@ -279,7 +277,7 @@ class MomentsAccountant(object):
     assert (target_eps is None) ^ (target_deltas is None)
     eps_deltas = []
     log_moments = sess.run(self._log_moments)
-    log_moments_with_order = zip(self._moment_orders, log_moments)
+    log_moments_with_order = list(zip(self._moment_orders, log_moments))
     if target_eps is not None:
       for eps in target_eps:
         eps_deltas.append(

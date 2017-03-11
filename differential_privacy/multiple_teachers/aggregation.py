@@ -14,9 +14,9 @@
 # ==============================================================================
 
 
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+
+
+
 
 import numpy as np
 
@@ -68,7 +68,7 @@ def noisy_max(logits, lap_scale, return_clean_votes=False):
     clean_votes = np.zeros((int(labels_shape[1]), 10))
 
   # Parse each sample
-  for i in xrange(int(labels_shape[1])):
+  for i in range(int(labels_shape[1])):
     # Count number of votes assigned to each class
     label_counts = np.bincount(labels[:, i], minlength=10)
 
@@ -80,7 +80,7 @@ def noisy_max(logits, lap_scale, return_clean_votes=False):
     label_counts = np.asarray(label_counts, dtype=np.float32)
 
     # Sample independent Laplacian noise for each class
-    for item in xrange(10):
+    for item in range(10):
       label_counts[item] += np.random.laplace(loc=0.0, scale=float(lap_scale))
 
     # Result is the most frequent label
@@ -117,7 +117,7 @@ def aggregation_most_frequent(logits):
   result = np.zeros(int(labels_shape[1]))
 
   # Parse each sample
-  for i in xrange(int(labels_shape[1])):
+  for i in range(int(labels_shape[1])):
     # Count number of votes assigned to each class
     label_counts = np.bincount(labels[:, i], minlength=10)
 

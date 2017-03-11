@@ -13,9 +13,9 @@
 # limitations under the License.
 # ==============================================================================
 
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+
+
+
 
 from datetime import datetime
 import math
@@ -502,7 +502,7 @@ def train(images, labels, ckpt_path, dropout=False):
     data_length = len(images)
     nb_batches = math.ceil(data_length / FLAGS.batch_size)
 
-    for step in xrange(FLAGS.max_steps):
+    for step in range(FLAGS.max_steps):
       # for debug, save start time
       start_time = time.time()
 
@@ -586,7 +586,7 @@ def softmax_preds(images, ckpt_path, return_logits=False):
     saver.restore(sess, ckpt_path)
 
     # Parse data by batch
-    for batch_nb in xrange(0, int(nb_batches+1)):
+    for batch_nb in range(0, int(nb_batches+1)):
       # Compute batch start and end indices
       start, end = utils.batch_indices(batch_nb, data_length, FLAGS.batch_size)
 

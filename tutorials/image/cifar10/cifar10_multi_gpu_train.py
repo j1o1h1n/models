@@ -35,9 +35,9 @@ data set, compile the program and train the model.
 
 http://tensorflow.org/tutorials/deep_cnn/
 """
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+
+
+
 
 from datetime import datetime
 import os.path
@@ -163,7 +163,7 @@ def train():
     # Calculate the gradients for each model tower.
     tower_grads = []
     with tf.variable_scope(tf.get_variable_scope()):
-      for i in xrange(FLAGS.num_gpus):
+      for i in range(FLAGS.num_gpus):
         with tf.device('/gpu:%d' % i):
           with tf.name_scope('%s_%d' % (cifar10.TOWER_NAME, i)) as scope:
             # Calculate the loss for one tower of the CIFAR model. This function
@@ -232,7 +232,7 @@ def train():
 
     summary_writer = tf.summary.FileWriter(FLAGS.train_dir, sess.graph)
 
-    for step in xrange(FLAGS.max_steps):
+    for step in range(FLAGS.max_steps):
       start_time = time.time()
       _, loss_value = sess.run([train_op, loss])
       duration = time.time() - start_time

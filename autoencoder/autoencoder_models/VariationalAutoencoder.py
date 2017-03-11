@@ -1,6 +1,6 @@
 import tensorflow as tf
 import numpy as np
-import autoencoder.Utils
+from . import autoencoder.Utils
 
 class VariationalAutoencoder(object):
 

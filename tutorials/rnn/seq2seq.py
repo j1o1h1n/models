@@ -14,9 +14,9 @@
 # ==============================================================================
 """Import seq2seq python ops for backward compatibility."""
 
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+
+
+
 
 raise ImportError(
     "This module is deprecated. Use tf.contrib.legacy_seq2seq instead.")

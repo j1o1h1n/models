@@ -46,7 +46,7 @@ def construct_vocab(data, utility, add_word=False):
         if (isinstance(word, numbers.Number)):
           number_found += 1
         else:
-          if (not (utility.word_ids.has_key(word))):
+          if (not (word in utility.word_ids)):
             utility.words.append(word)
             utility.word_count[word] = 1
             utility.word_ids[word] = len(utility.word_ids)
@@ -58,7 +58,7 @@ def construct_vocab(data, utility, add_word=False):
           if (isinstance(word, numbers.Number)):
             number_found += 1
           else:
-            if (not (utility.word_ids.has_key(word))):
+            if (not (word in utility.word_ids)):
               utility.words.append(word)
               utility.word_count[word] = 1
               utility.word_ids[word] = len(utility.word_ids)
@@ -70,7 +70,7 @@ def construct_vocab(data, utility, add_word=False):
           if (isinstance(word, numbers.Number)):
             number_found += 1
           else:
-            if (not (utility.word_ids.has_key(word))):
+            if (not (word in utility.word_ids)):
               utility.words.append(word)
               utility.word_count[word] = 1
               utility.word_ids[word] = len(utility.word_ids)
@@ -80,7 +80,7 @@ def construct_vocab(data, utility, add_word=False):
 
 
 def word_lookup(word, utility):
-  if (utility.word_ids.has_key(word)):
+  if (word in utility.word_ids):
     return word
   else:
     return utility.unk_token
@@ -201,12 +201,12 @@ def get_max_entry(a):
   e = {}
   for w in a:
     if (w != "UNK, "):
-      if (e.has_key(w)):
+      if (w in e):
         e[w] += 1
       else:
         e[w] = 1
   if (len(e) > 0):
-    (key, val) = sorted(e.items(), key=lambda x: -1 * x[1])[0]
+    (key, val) = sorted(list(e.items()), key=lambda x: -1 * x[1])[0]
     if (val > 1):
       return key
     else:
@@ -389,7 +389,7 @@ def complete_wiki_processing(data, utility, train=True):
                                    utility)):
             example.processed_column_mask.append(0.0)
           sorted_index = sorted(
-              range(len(example.processed_number_columns[start])),
+              list(range(len(example.processed_number_columns[start]))),
               key=lambda k: example.processed_number_columns[start][k],
               reverse=True)
           sorted_index = sorted_index + [utility.FLAGS.pad_int] * (
@@ -425,7 +425,7 @@ def complete_wiki_processing(data, utility, train=True):
                                    utility)):
             example.processed_word_column_mask.append(0.0)
           sorted_index = sorted(
-              range(len(example.processed_word_columns[start])),
+              list(range(len(example.processed_word_columns[start]))),
               key=lambda k: example.processed_word_columns[start][k],
               reverse=True)
           sorted_index = sorted_index + [utility.FLAGS.pad_int] * (
@@ -536,15 +536,15 @@ def add_special_words(utility):
   utility.reverse_word_ids[utility.word_ids[
       utility.entry_match_token]] = utility.entry_match_token
   utility.entry_match_token_id = utility.word_ids[utility.entry_match_token]
-  print "entry match token: ", utility.word_ids[
-      utility.entry_match_token], utility.entry_match_token_id
+  print("entry match token: ", utility.word_ids[
+      utility.entry_match_token], utility.entry_match_token_id)
   utility.words.append(utility.column_match_token)
   utility.word_ids[utility.column_match_token] = len(utility.word_ids)
   utility.reverse_word_ids[utility.word_ids[
       utility.column_match_token]] = utility.column_match_token
   utility.column_match_token_id = utility.word_ids[utility.column_match_token]
-  print "entry match token: ", utility.word_ids[
-      utility.column_match_token], utility.column_match_token_id
+  print("entry match token: ", utility.word_ids[
+      utility.column_match_token], utility.column_match_token_id)
   utility.words.append(utility.dummy_token)
   utility.word_ids[utility.dummy_token] = len(utility.word_ids)
   utility.reverse_word_ids[utility.word_ids[
@@ -558,8 +558,8 @@ def add_special_words(utility):
 
 def perform_word_cutoff(utility):
   if (utility.FLAGS.word_cutoff > 0):
-    for word in utility.word_ids.keys():
-      if (utility.word_count.has_key(word) and utility.word_count[word] <
+    for word in list(utility.word_ids.keys()):
+      if (word in utility.word_count and utility.word_count[word] <
           utility.FLAGS.word_cutoff and word != utility.unk_token and
           word != utility.dummy_token and word != utility.entry_match_token and
           word != utility.column_match_token):

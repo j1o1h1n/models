@@ -27,9 +27,9 @@ The key ops used are:
 * neg_train custom op that efficiently calculates and applies the gradient using
   true SGD.
 """
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+
+
+
 
 import os
 import sys
@@ -238,7 +238,7 @@ class Word2Vec(object):
     """Save the vocabulary to a file so the model can be reloaded."""
     opts = self._options
     with open(os.path.join(opts.save_path, "vocab.txt"), "w") as f:
-      for i in xrange(opts.vocab_size):
+      for i in range(opts.vocab_size):
         vocab_word = tf.compat.as_text(opts.vocab_words[i]).encode("utf-8")
         f.write("%s %d\n" % (vocab_word,
                              opts.vocab_counts[i]))
@@ -316,7 +316,7 @@ class Word2Vec(object):
     initial_epoch, initial_words = self._session.run([self._epoch, self._words])
 
     workers = []
-    for _ in xrange(opts.concurrent_steps):
+    for _ in range(opts.concurrent_steps):
       t = threading.Thread(target=self._train_thread_body)
       t.start()
       workers.append(t)
@@ -365,8 +365,8 @@ class Word2Vec(object):
       sub = self._analogy_questions[start:limit, :]
       idx = self._predict(sub)
       start = limit
-      for question in xrange(sub.shape[0]):
-        for j in xrange(4):
+      for question in range(sub.shape[0]):
+        for j in range(4):
           if idx[question, j] == sub[question, 3]:
             # Bingo! We predicted correctly. E.g., [italy, rome, france, paris].
             correct += 1
@@ -396,7 +396,7 @@ class Word2Vec(object):
     ids = np.array([self._word2id.get(x, 0) for x in words])
     vals, idx = self._session.run(
         [self._nearby_val, self._nearby_idx], {self._nearby_word: ids})
-    for i in xrange(len(words)):
+    for i in range(len(words)):
       print("\n%s\n=====================================" % (words[i]))
       for (neighbor, distance) in zip(idx[i, :num], vals[i, :num]):
         print("%-20s %6.4f" % (self._id2word[neighbor], distance))
@@ -422,7 +422,7 @@ def main(_):
     with tf.device("/cpu:0"):
       model = Word2Vec(opts, session)
       model.read_analogies() # Read analogy questions
-    for _ in xrange(opts.epochs_to_train):
+    for _ in range(opts.epochs_to_train):
       model.train()  # Process one epoch
       model.eval()  # Eval analogies.
     # Perform a final save.

@@ -14,7 +14,7 @@
 # ==============================================================================
 """Example differentially private trainer and evaluator for MNIST.
 """
-from __future__ import division
+
 
 import json
 import os
@@ -202,7 +202,7 @@ def Eval(mnist_data_file, network_parameters, num_testing_images,
     correct_predictions = 0
     image_index = 0
     mistakes = []
-    for _ in xrange((num_testing_images + batch_size - 1) // batch_size):
+    for _ in range((num_testing_images + batch_size - 1) // batch_size):
       predictions, label_values = sess.run([softmax, labels])
 
       # Count how many were predicted correctly.
@@ -361,13 +361,13 @@ def Train(mnist_train_file, mnist_test_file, network_parameters, num_steps,
 
     lot_size = FLAGS.batches_per_lot * FLAGS.batch_size
     lots_per_epoch = NUM_TRAINING_IMAGES / lot_size
-    for step in xrange(num_steps):
+    for step in range(num_steps):
       epoch = step / lots_per_epoch
       curr_lr = utils.VaryRate(FLAGS.lr, FLAGS.end_lr,
                                FLAGS.lr_saturate_epochs, epoch)
       curr_eps = utils.VaryRate(FLAGS.eps, FLAGS.end_eps,
                                 FLAGS.eps_saturate_epochs, epoch)
-      for _ in xrange(FLAGS.batches_per_lot):
+      for _ in range(FLAGS.batches_per_lot):
         _ = sess.run(
             [gd_op], feed_dict={lr: curr_lr, eps: curr_eps, delta: FLAGS.delta})
       sys.stderr.write("step: %d\n" % step)
@@ -478,7 +478,7 @@ def main(_):
   if FLAGS.projection_dimensions > 0:
     network_parameters.projection_type = "PCA"
     network_parameters.projection_dimensions = FLAGS.projection_dimensions
-  for i in xrange(FLAGS.num_hidden_layers):
+  for i in range(FLAGS.num_hidden_layers):
     hidden = utils.LayerParameters()
     hidden.name = "hidden%d" % i
     hidden.num_units = FLAGS.hidden_layer_num_units

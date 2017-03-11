@@ -34,9 +34,9 @@ Here is an overview of the functions available in this module:
     generating arbitrary sequence patterns
 """
 
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+
+
+
 
 import time
 
@@ -247,7 +247,7 @@ def namignator(checkpoint_path, config):
             next_letter = np.random.choice(27, p=activations[0])
             name += [next_letter]
 
-        print(map(lambda x: chr(x + 96), name))
+        print([chr(x + 96) for x in name])
 
 
 if __name__ == "__main__":
